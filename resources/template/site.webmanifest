@@ -1,0 +1,16 @@
+{
+    "name": "台灣社會階層自我評估測驗",
+    "short_name": "階層測驗",
+    "description": "7 題算出你在台灣社會結構中的實質定位，級距與文案以主計總處、內政部真實數據校準。",
+    "lang": "zh-Hant",
+    "icons": [
+        {"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"},
+        {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+        {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"}
+    ],
+    "theme_color": "#0C1120",
+    "background_color": "#070A14",
+    "display": "standalone",
+    "start_url": "/",
+    "scope": "/"
+}

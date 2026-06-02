@@ -1,0 +1,38 @@
+@use 'reset-css/reset.css';
+@use 'normalize';
+
+@tailwind utilities;
+
+html, body {
+    font-family: 'Noto Sans TC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: theme('colors.steel.100');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background:
+        radial-gradient(ellipse 70% 50% at 15% -5%, rgba(17, 161, 176, 0.16) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 55% at 100% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 55%),
+        theme('colors.ink.950');
+    min-height: 100vh;
+}
+
+::selection {
+    background: theme('colors.teal.500');
+    color: theme('colors.ink.950');
+}
+
+// 數字用等寬對齊（分數滾動、統計卡）
+.font-tabular {
+    font-variant-numeric: tabular-nums;
+}
+
+// 細網格底紋（儀表板感）— 用在大區塊背景
+.grid-texture {
+    background-image:
+        linear-gradient(theme('colors.steel.800') 1px, transparent 1px),
+        linear-gradient(90deg, theme('colors.steel.800') 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.18;
+}

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0F1626"/>
+            <stop offset="100%" stop-color="#070A14"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="78%" cy="22%" r="55%">
+            <stop offset="0%" stop-color="#11A1B0" stop-opacity="0.28"/>
+            <stop offset="100%" stop-color="#11A1B0" stop-opacity="0"/>
+        </radialGradient>
+        <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#262B3B" stroke-width="1"/>
+        </pattern>
+    </defs>
+
+    <rect width="1200" height="630" fill="url(#bg)"/>
+    <rect width="1200" height="630" fill="url(#grid)" opacity="0.5"/>
+    <rect width="1200" height="630" fill="url(#glow)"/>
+
+    <!-- 遞增階梯長條（右側） -->
+    <g>
+        <rect x="760" y="430" width="56" height="120" rx="10" fill="#FB7185"/>
+        <rect x="836" y="350" width="56" height="200" rx="10" fill="#FBBF24"/>
+        <rect x="912" y="250" width="56" height="300" rx="10" fill="#24C2CE"/>
+        <rect x="988" y="140" width="56" height="410" rx="10" fill="#A78BFA"/>
+        <circle cx="864" cy="320" r="18" fill="#0F1626" stroke="#FBBF24" stroke-width="6"/>
+    </g>
+
+    <!-- 品牌標 -->
+    <g transform="translate(90, 86)">
+        <rect width="46" height="46" rx="11" fill="#11151F"/>
+        <rect x="8" y="28" width="6.5" height="10" rx="2" fill="#FB7185"/>
+        <rect x="17" y="22" width="6.5" height="16" rx="2" fill="#FBBF24"/>
+        <rect x="26" y="16" width="6.5" height="22" rx="2" fill="#24C2CE"/>
+        <rect x="35" y="9" width="6.5" height="29" rx="2" fill="#A78BFA"/>
+        <text x="62" y="32" font-family="'Noto Sans TC', sans-serif" font-size="26" font-weight="700" fill="#E5E9F1">台灣社會階層測驗</text>
+    </g>
+
+    <!-- 主標 -->
+    <text x="90" y="330" font-family="'Noto Sans TC', sans-serif" font-size="78" font-weight="900" fill="#F4F6FA" letter-spacing="-2">你站在台灣</text>
+    <text x="90" y="430" font-family="'Noto Sans TC', sans-serif" font-size="78" font-weight="900" letter-spacing="-2">
+        <tspan fill="#F4F6FA">社會的</tspan><tspan fill="#4FDAD6">哪一層</tspan><tspan fill="#F4F6FA">？</tspan>
+    </text>
+    <text x="92" y="500" font-family="'Noto Sans TC', sans-serif" font-size="27" font-weight="500" fill="#A3AECA">
+        7 題 · 4 個階層 · 用主計總處與內政部的真實數據量出你的定位
+    </text>
+</svg>
