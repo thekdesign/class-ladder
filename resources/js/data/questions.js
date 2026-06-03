@@ -1,6 +1,6 @@
 /**
  * 測驗題庫：以 Bourdieu「三種資本」拆解 privilege（特權）。
- * 3 種資本 × 每種 3 題 = 9 題，每題 5 個選項（A~E = 1~5 分），總分 9~45。
+ * 3 種資本 × 每種 4 題 = 12 題，每題 5 個選項（A~E = 1~5 分），總分 12~60。
  *
  * - 經濟資本 economic：你手上的錢與資產（收入、房產、淨資產）
  * - 文化資本 cultural：知識、學養、品味、財商
@@ -53,6 +53,18 @@ export const QUESTIONS = [
             {key: 'E', score: 5, label: 'NT$ 3,000 萬以上', note: '最富 20% 家庭平均淨值 5,133 萬'},
         ],
     },
+    {
+        id: 'e4',
+        dimension: 'economic',
+        title: '若你或最親的家人突然生大病需長照、或你非自願失業，財務能撐多久不變形？',
+        options: [
+            {key: 'A', score: 1, label: '連 1~2 個月都很吃緊，會立刻陷入危機'},
+            {key: 'B', score: 2, label: '靠存款能撐 3~6 個月，但內心會極度焦慮'},
+            {key: 'C', score: 3, label: '有緊急預備金＋基本醫療／防癌險，撐一年沒問題'},
+            {key: 'D', score: 4, label: '完善資產配置（穩定股利）＋高額保險，幾乎不影響生活品質'},
+            {key: 'E', score: 5, label: '家族母體資源或信託在後面，這種風險只是數字變動'},
+        ],
+    },
     // ───────── 文化資本 ─────────
     {
         id: 'c1',
@@ -88,6 +100,18 @@ export const QUESTIONS = [
             {key: 'C', score: 3, label: '有固定閱讀／藝文習慣或一門才藝，外語能順暢溝通'},
             {key: 'D', score: 4, label: '紅酒、藝術、高爾夫或音樂會是日常，雙語流利'},
             {key: 'E', score: 5, label: '收藏或贊助藝文，多語切換自如，品味本身就是社交貨幣'},
+        ],
+    },
+    {
+        id: 'c4',
+        dimension: 'cultural',
+        title: '你平常獲取與判斷資訊的方式，比較接近？',
+        options: [
+            {key: 'A', score: 1, label: '演算法推什麼就看什麼，很少查證'},
+            {key: 'B', score: 2, label: '會看新聞和社群，但較少主動分辨來源可信度'},
+            {key: 'C', score: 3, label: '有固定的優質資訊來源，會交叉查證、分得出雜訊'},
+            {key: 'D', score: 4, label: '習慣讀一手資料／國外資訊／專業報告，判讀力強'},
+            {key: 'E', score: 5, label: '有人脈或團隊幫你過濾，能拿到別人接觸不到的內部資訊'},
         ],
     },
     // ───────── 社會資本 ─────────
@@ -127,6 +151,18 @@ export const QUESTIONS = [
             {key: 'E', score: 5, label: '家族本身就是一張政商資源網，起跑點遠超多數人'},
         ],
     },
+    {
+        id: 's4',
+        dimension: 'social',
+        title: '除了朋友，你有沒有「能互相拉抬」的社群或組織？',
+        options: [
+            {key: 'A', score: 1, label: '基本上沒有，遇事多半單打獨鬥'},
+            {key: 'B', score: 2, label: '有一些線上社團或同好，但很難轉成實質幫助'},
+            {key: 'C', score: 3, label: '有校友會／產業社群／同事圈，需要時找得到人'},
+            {key: 'D', score: 4, label: '身處有影響力的專業圈或商會，資源與機會會主動流過來'},
+            {key: 'E', score: 5, label: '置身政商／家族／菁英網絡，圈子本身就是門檻與槓桿'},
+        ],
+    },
 ];
 
 export const TOTAL_QUESTIONS = QUESTIONS.length;
@@ -134,4 +170,4 @@ export const MIN_SCORE = TOTAL_QUESTIONS; // 9
 export const MAX_SCORE = TOTAL_QUESTIONS * 5; // 45
 
 /** 每種資本的題數（用於 PR 換算：單一資本分數區間 = QUESTIONS_PER_CAPITAL ~ ×5） */
-export const QUESTIONS_PER_CAPITAL = 3;
+export const QUESTIONS_PER_CAPITAL = 4;

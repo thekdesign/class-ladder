@@ -10,8 +10,8 @@
 export const TIERS = [
     {
         id: 'survival',
-        min: 9,
-        max: 15,
+        min: 12,
+        max: 20,
         short: '底層',
         zone: '生存防守區',
         name: '底層與財務弱勢',
@@ -43,8 +43,8 @@ export const TIERS = [
     },
     {
         id: 'middle',
-        min: 16,
-        max: 26,
+        min: 21,
+        max: 35,
         short: '中產',
         zone: '痛感最深的陣痛區',
         name: '邊緣中產至核心中產',
@@ -76,8 +76,8 @@ export const TIERS = [
     },
     {
         id: 'elite',
-        min: 27,
-        max: 35,
+        min: 36,
+        max: 47,
         short: '翻身',
         zone: '掌握選擇權的翻身區',
         name: '富裕中產與精英階層',
@@ -109,8 +109,8 @@ export const TIERS = [
     },
     {
         id: 'top',
-        min: 36,
-        max: 45,
+        min: 48,
+        max: 60,
         short: '頂層',
         zone: '資本利得與資源傳承區',
         name: '頂層社會',
@@ -145,4 +145,4 @@ export const TIERS = [
 export const getTierByScore = (score) => TIERS.find((t) => score >= t.min && score <= t.max) || TIERS[0];
 
 /** 同儕悄悄話：放在結果頁底部，緩衝測出陣痛區的挫折感 */
-export const PEER_NOTE = '很多年輕人在台灣（尤其雙北）剛起步時，因為買不起房、淨資產還在累積，測出來往往落在 16~26 分的陣痛區。這很正常 —— 從「收入高」到「資產多」中間，需要時間的複利去發酵。';
+export const PEER_NOTE = '很多年輕人在台灣（尤其雙北）剛起步時，因為買不起房、淨資產還在累積，測出來往往落在 21~35 分的陣痛區。這很正常 —— 從「收入高」到「資產多」中間，需要時間的複利去發酵。';

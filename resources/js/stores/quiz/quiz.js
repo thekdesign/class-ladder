@@ -3,7 +3,7 @@ import {QUESTIONS} from 'data/questions';
 import {totalScore, answeredCount, isComplete, tierOf, dimensionScores, scorePercent, inheritanceSplit} from 'libs/score';
 import {classifyPersona, weakestCapital} from 'data/personas';
 
-const STORAGE_KEY = 'class-ladder:answers:v2';
+const STORAGE_KEY = 'class-ladder:answers:v3';
 const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
 const emptyAnswers = () => QUESTIONS.map(() => undefined);
