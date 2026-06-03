@@ -50,8 +50,8 @@
                 <div class="share-card__score">
                     <span class="share-card__score-num" :style="{color: tier.color}">{{ percent }}</span>
                     <span class="share-card__score-unit">特權 PR</span>
-                    <span class="share-card__score-max">總分 {{ total }} / {{ maxScore }}</span>
                 </div>
+                <div class="share-card__score-total">總分 {{ total }} / {{ maxScore }}</div>
             </div>
 
             <!-- 光譜定位 -->
@@ -229,12 +229,11 @@ export default {
     letter-spacing: 1px;
     color: #5A6788;
 }
-.share-card__score-max {
+.share-card__score-total {
+    margin-top: 10px;
     font-size: 24px;
     font-weight: 600;
-    color: #46506B;
-    margin-left: auto;
-    align-self: flex-end;
+    color: #5A6788;
 }
 
 .share-card__spectrum {
@@ -358,8 +357,9 @@ export default {
 .share-card--story .share-card__score-unit {
     font-size: 42px;
 }
-.share-card--story .share-card__score-max {
-    font-size: 34px;
+.share-card--story .share-card__score-total {
+    font-size: 32px;
+    margin-top: 14px;
 }
 .share-card--story .share-card__spectrum {
     margin: 60px 0;

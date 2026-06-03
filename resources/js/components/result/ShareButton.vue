@@ -35,15 +35,15 @@ export default {
         const storyRef = ref(null);
         const busy = ref(false);
         const supportsFileShare = ref(false);
-        const labels = reactive({square: '分享結果圖', story: '限動直式版'});
+        const labels = reactive({square: '下載結果圖', story: '限動直式版'});
 
         const FORMATS = {
-            square: {refName: 'squareRef', scale: 2, suffix: ''},
-            story: {refName: 'storyRef', scale: 1.5, suffix: '_限動版'},
+            square: {scale: 2, suffix: '', share: false},
+            story: {scale: 1.5, suffix: '_限動版', share: true},
         };
 
         const resetLabels = () => {
-            labels.square = supportsFileShare.value ? '分享結果圖' : '下載結果圖';
+            labels.square = '下載結果圖';
             labels.story = supportsFileShare.value ? '限動直式版' : '下載限動版';
         };
 
@@ -81,7 +81,7 @@ export default {
                 const file = blob ? new File([blob], filename, {type: 'image/png'}) : null;
                 const text = `我在「台灣社會階層測驗」測出 ${store.total} 分（特權 PR ${store.percent}）：${store.tier.name}・${store.persona.name}`;
 
-                if (file && navigator.canShare && navigator.canShare({files: [file]})) {
+                if (cfg.share && file && navigator.canShare && navigator.canShare({files: [file]})) {
                     try {
                         await navigator.share({files: [file], title: '台灣社會階層測驗', text});
                         labels[format] = '已分享 ✓';
