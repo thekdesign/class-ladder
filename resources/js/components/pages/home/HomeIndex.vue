@@ -4,7 +4,7 @@
         <section class="pt-12 sm:pt-20 pb-12 text-center max-w-[760px] mx-auto animate-fade-up">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-300 text-xs font-medium mb-6">
                 <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse-dot"></span>
-                7 題 · 真實數據校準 · 純前端、不蒐集任何資料
+                真實數據校準 · 純前端 · 不蒐集任何資料
             </div>
             <h1 class="font-display text-4xl sm:text-[3.4rem] font-bold text-steel-50 leading-[1.15] tracking-tight mb-5">
                 你，站在台灣社會的
@@ -14,7 +14,7 @@
                 用社會學家 Bourdieu 的
                 <span class="text-steel-100 font-medium">三種資本</span>
                 ——經濟、文化、社會——拆解你的「特權值」，<br class="hidden sm:block" />
-                9 道題量出你在台灣社會結構中的實質定位。
+                短短幾題，量出你在台灣社會結構中的實質定位。
                 <br class="hidden sm:block" />
                 每個級距都對照
                 <span class="text-steel-100 font-medium">主計總處、內政部</span>
@@ -43,7 +43,7 @@
             <div class="rounded-xl2 border border-steel-800/70 bg-ink-900/60 p-6 sm:p-8 shadow-panel">
                 <div class="flex items-baseline justify-between mb-4">
                     <h2 class="font-display text-lg font-bold text-steel-100">四個階層級距</h2>
-                    <span class="font-mono text-xs text-steel-500">總分 9 – 45</span>
+                    <span class="font-mono text-xs text-steel-500">總分 {{ minScore }} – {{ maxScore }}</span>
                 </div>
 
                 <div class="flex h-3 rounded-full overflow-hidden mb-5">
@@ -125,7 +125,7 @@
 
 <script>
 import {TIERS} from 'data/tiers';
-import {DIMENSIONS} from 'data/questions';
+import {DIMENSIONS, MIN_SCORE, MAX_SCORE} from 'data/questions';
 import {STATS} from 'data/stats';
 import {useQuizStore} from 'stores/quiz/quiz';
 
@@ -137,6 +137,8 @@ export default {
         return {
             store,
             tiers: TIERS,
+            minScore: MIN_SCORE,
+            maxScore: MAX_SCORE,
             dimensions: Object.values(DIMENSIONS),
             teaserStats: [
                 STATS.find((s) => s.id === 'salaryMedian'),

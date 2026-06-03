@@ -1,7 +1,7 @@
 {
     "name": "台灣社會階層自我評估測驗",
     "short_name": "階層測驗",
-    "description": "7 題算出你在台灣社會結構中的實質定位，級距與文案以主計總處、內政部真實數據校準。",
+    "description": "用主計總處、內政部真實數據算出你在台灣社會結構中的實質定位，並以 Bourdieu 三種資本拆解你的特權值。",
     "lang": "zh-Hant",
     "icons": [
         {"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"},

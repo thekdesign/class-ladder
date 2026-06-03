@@ -4,7 +4,7 @@
         <div v-if="!store.complete" class="text-center py-20 animate-fade-up">
             <div class="text-5xl mb-4">🪜</div>
             <h2 class="font-display text-2xl font-bold text-steel-100 mb-2">還沒有結果</h2>
-            <p class="text-steel-400 mb-7">你還沒完成 7 題作答，先去測驗吧。</p>
+            <p class="text-steel-400 mb-7">你還沒完成作答，先去測驗吧。</p>
             <RouterLink
                 :to="{name: 'QUIZ_INDEX'}"
                 class="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 hover:bg-teal-400 text-ink-950 font-bold rounded-full shadow-glow transition-all"
