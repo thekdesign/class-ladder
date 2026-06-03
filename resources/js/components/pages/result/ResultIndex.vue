@@ -222,6 +222,9 @@
                 </div>
             </section>
 
+            <!-- 姊妹站 cross-link -->
+            <SisterSiteCard />
+
             <!-- 行動 -->
             <section class="mt-9 flex flex-wrap gap-3 justify-center">
                 <button
@@ -265,6 +268,7 @@ import {useCountUp} from 'composables/useCountUp';
 import {useQuizStore} from 'stores/quiz/quiz';
 import ShareButton from 'components/result/ShareButton.vue';
 import CapitalRadar from 'components/result/CapitalRadar.vue';
+import SisterSiteCard from 'components/result/SisterSiteCard.vue';
 
 const hexAlpha = (hex, alpha) => {
     const h = hex.replace('#', '');
@@ -287,7 +291,7 @@ const prMap = (dims) => {
 
 export default {
     name: 'ResultIndex',
-    components: {ShareButton, CapitalRadar},
+    components: {ShareButton, CapitalRadar, SisterSiteCard},
     setup() {
         const store = useQuizStore();
         const router = useRouter();
