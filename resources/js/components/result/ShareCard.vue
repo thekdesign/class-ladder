@@ -1,6 +1,9 @@
 <template>
     <!-- 隱藏在畫面外、專供 html2canvas 截圖用 — 比直接拍主結論卡更乾淨可控 -->
-    <div ref="cardEl" class="share-card font-sans" aria-hidden="true">
+    <div ref="cardEl"
+         class="share-card font-sans"
+         :class="{'share-card--story': format === 'story'}"
+         aria-hidden="true">
         <div class="share-card__inner">
             <!-- 品牌列 -->
             <div class="share-card__header">
@@ -40,6 +43,10 @@
             <div class="share-card__body">
                 <div class="share-card__label">我的階層定位</div>
                 <div class="share-card__name" :style="{color: tier.color}">{{ tier.name }}</div>
+                <div class="share-card__persona">
+                    <span class="share-card__persona-name">{{ persona.name }}</span>
+                    <span class="share-card__persona-tag">{{ persona.tagline }}</span>
+                </div>
                 <div class="share-card__score">
                     <span class="share-card__score-num" :style="{color: tier.color}">{{ percent }}</span>
                     <span class="share-card__score-unit">特權 PR</span>
@@ -49,14 +56,16 @@
 
             <!-- 光譜定位 -->
             <div class="share-card__spectrum">
-                <div class="share-card__track">
-                    <div
-                        v-for="t in tiers"
-                        :key="t.id"
-                        class="share-card__seg"
-                        :style="{flex: t.max - t.min + 1, background: t.id === tier.id ? t.color : segDim(t.color)}"
-                    ></div>
-                    <div class="share-card__marker" :style="{left: `calc(${percent}% - 13px)`, background: tier.color}"></div>
+                <div class="share-card__track-wrap">
+                    <div class="share-card__track">
+                        <div
+                            v-for="t in tiers"
+                            :key="t.id"
+                            class="share-card__seg"
+                            :style="{flex: t.max - t.min + 1, background: t.id === tier.id ? t.color : segDim(t.color)}"
+                        ></div>
+                    </div>
+                    <div class="share-card__marker" :style="{left: `${percent}%`, background: tier.color}"></div>
                 </div>
                 <div class="share-card__scale">
                     <span v-for="t in tiers" :key="t.id">{{ t.min }} {{ t.short }}</span>
@@ -97,6 +106,9 @@ const segDim = (hex) => {
 
 export default {
     name: 'ShareCard',
+    props: {
+        format: {type: String, default: 'square'}, // 'square' (800×800) | 'story' (1080×1920)
+    },
     setup(_, {expose}) {
         const store = useQuizStore();
         const cardEl = ref(null);
@@ -111,6 +123,7 @@ export default {
             total: computed(() => store.total),
             percent: computed(() => store.percent),
             dimensions: computed(() => store.dimensions),
+            persona: computed(() => store.persona),
             segDim,
         };
     },
@@ -182,7 +195,22 @@ export default {
     font-weight: 900;
     line-height: 1.1;
     letter-spacing: -1px;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
+}
+.share-card__persona {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 22px;
+}
+.share-card__persona-name {
+    font-size: 30px;
+    font-weight: 800;
+    color: #E5E9F1;
+}
+.share-card__persona-tag {
+    font-size: 20px;
+    color: #7986A8;
 }
 .share-card__score {
     display: flex;
@@ -212,8 +240,10 @@ export default {
 .share-card__spectrum {
     margin: 28px 0;
 }
-.share-card__track {
+.share-card__track-wrap {
     position: relative;
+}
+.share-card__track {
     display: flex;
     height: 16px;
     border-radius: 999px;
@@ -224,12 +254,13 @@ export default {
 }
 .share-card__marker {
     position: absolute;
-    top: -5px;
+    top: 50%;
     width: 26px;
     height: 26px;
     border-radius: 999px;
     border: 4px solid #0C1120;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
 }
 .share-card__scale {
     display: flex;
@@ -278,5 +309,92 @@ export default {
     font-size: 13px;
     letter-spacing: 2px;
     color: #46506B;
+}
+
+/* ───────── 直式 IG 限動版 1080×1920 ───────── */
+.share-card--story {
+    width: 1080px;
+    height: 1920px;
+    background-image: linear-gradient(165deg, #131C2E 0%, #0C1120 55%, #070A14 100%);
+}
+.share-card--story .share-card__inner {
+    padding: 120px 96px;
+}
+.share-card--story .share-card__header {
+    margin-bottom: 24px;
+}
+.share-card--story .share-card__brand {
+    font-size: 36px;
+    gap: 16px;
+}
+.share-card--story .share-card__brand-icon {
+    width: 54px;
+    height: 54px;
+}
+.share-card--story .share-card__zone {
+    font-size: 30px;
+}
+.share-card--story .share-card__label {
+    font-size: 34px;
+    margin-bottom: 16px;
+}
+.share-card--story .share-card__name {
+    font-size: 104px;
+    margin-bottom: 24px;
+}
+.share-card--story .share-card__persona {
+    gap: 6px;
+    margin-bottom: 40px;
+}
+.share-card--story .share-card__persona-name {
+    font-size: 46px;
+}
+.share-card--story .share-card__persona-tag {
+    font-size: 30px;
+}
+.share-card--story .share-card__score-num {
+    font-size: 168px;
+}
+.share-card--story .share-card__score-unit {
+    font-size: 42px;
+}
+.share-card--story .share-card__score-max {
+    font-size: 34px;
+}
+.share-card--story .share-card__spectrum {
+    margin: 60px 0;
+}
+.share-card--story .share-card__track {
+    height: 26px;
+}
+.share-card--story .share-card__marker {
+    width: 42px;
+    height: 42px;
+    border-width: 6px;
+}
+.share-card--story .share-card__scale {
+    font-size: 24px;
+    margin-top: 22px;
+}
+.share-card--story .share-card__dims {
+    padding: 56px 0;
+    gap: 36px;
+}
+.share-card--story .share-card__dim-label {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.share-card--story .share-card__dim-value {
+    font-size: 48px;
+}
+.share-card--story .share-card__dim-value span {
+    font-size: 24px;
+}
+.share-card--story .share-card__footer {
+    margin-top: 48px;
+    font-size: 24px;
+}
+.share-card--story .share-card__mark {
+    font-size: 18px;
 }
 </style>

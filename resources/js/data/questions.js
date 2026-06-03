@@ -22,11 +22,11 @@ export const QUESTIONS = [
         dimension: 'economic',
         title: '你的個人年薪或主要主動收入落在？',
         options: [
-            {key: 'A', score: 1, label: 'NT$ 40 萬以下（接近基本工資）'},
-            {key: 'B', score: 2, label: 'NT$ 40 ~ 70 萬（基層、服務業或一般內勤中位數區間）'},
-            {key: 'C', score: 3, label: 'NT$ 70 ~ 150 萬（工程師、公教、上市櫃基層主管）', note: '年薪跨過 127.9 萬就擠進個人薪資前 10%'},
-            {key: 'D', score: 4, label: 'NT$ 150 ~ 300 萬（科技業核心、資深專業職、專科醫學精英）'},
-            {key: 'E', score: 5, label: 'NT$ 300 萬以上（高階主管、企業主、跨國專業經理人）'},
+            {key: 'A', score: 1, label: 'NT$ 45 萬以下（接近基本工資、部分工時或社會新鮮人起薪）'},
+            {key: 'B', score: 2, label: 'NT$ 45 ~ 65 萬（一般上班族中段）', note: '個人薪資中位數 52.5 萬落在這一段'},
+            {key: 'C', score: 3, label: 'NT$ 65 ~ 100 萬（工程師、公教、上市櫃基層主管）'},
+            {key: 'D', score: 4, label: 'NT$ 100 ~ 180 萬（科技業核心、資深專業職、專科醫師）', note: '年薪 127.9 萬是個人薪資前 10% 的門檻'},
+            {key: 'E', score: 5, label: 'NT$ 180 萬以上（高階主管、企業主、跨國專業經理人）'},
         ],
     },
     {

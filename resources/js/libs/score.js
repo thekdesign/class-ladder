@@ -6,6 +6,7 @@
 import {QUESTIONS, MIN_SCORE, MAX_SCORE} from 'data/questions';
 import {DIMENSIONS} from 'data/questions';
 import {getTierByScore} from 'data/tiers';
+import {classifyPersona, weakestCapital} from 'data/personas';
 
 export const answeredCount = (answers = []) => answers.filter((s) => typeof s === 'number').length;
 
@@ -49,4 +50,24 @@ export const dimensionScores = (answers = []) => {
 
         return {...dim, score, min, max, pr: toPr(score, min, max)};
     });
+};
+
+/**
+ * 把一份 answers 整理成完整結果摘要（給結果頁、分享卡、比較頁共用）。
+ * 純函式：傳入任意 answers 都能算，不依賴 store。
+ */
+export const summarize = (answers = []) => {
+    const total = totalScore(answers);
+    const dimensions = dimensionScores(answers);
+
+    return {
+        answers,
+        total,
+        percent: scorePercent(total),
+        complete: isComplete(answers),
+        tier: tierOf(total),
+        dimensions,
+        persona: classifyPersona(dimensions),
+        weakest: weakestCapital(dimensions),
+    };
 };

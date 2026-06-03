@@ -73,6 +73,25 @@
                 </div>
             </section>
 
+            <!-- 資本組成診斷（persona）+ 雷達 -->
+            <section class="mt-8">
+                <h2 class="font-display text-lg font-bold text-steel-100 mb-1">你的資本組成</h2>
+                <p class="text-sm text-steel-500 mb-4">看「形狀」不只看總分 —— 三種資本的高低配比，決定你是哪一種人。</p>
+                <div class="rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-6 grid sm:grid-cols-[200px_1fr] gap-5 items-center">
+                    <div class="max-w-[220px] mx-auto w-full">
+                        <CapitalRadar :series="radarSeries" />
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-2xl">{{ persona.emoji }}</span>
+                            <span class="font-display text-xl font-bold text-steel-50">{{ persona.name }}</span>
+                        </div>
+                        <div class="text-sm mb-2.5" :style="{color: tier.color}">「{{ persona.tagline }}」</div>
+                        <p class="text-sm text-steel-300 leading-relaxed">{{ persona.desc }}</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- 翻轉建議 -->
             <section class="mt-8">
                 <h2 class="font-display text-lg font-bold text-steel-100 mb-4">{{ tier.adviceTitle }}</h2>
@@ -119,6 +138,10 @@
                             ></div>
                         </div>
                     </div>
+                </div>
+                <div class="mt-3 rounded-xl border border-teal-500/20 bg-teal-500/5 p-4">
+                    <div class="text-xs font-medium text-teal-300 mb-1">🎯 你最弱的一環：{{ weakest.label }}（PR {{ weakest.pr }}）</div>
+                    <p class="text-sm text-steel-300 leading-relaxed">{{ capitalTip }}</p>
                 </div>
             </section>
 
@@ -171,6 +194,13 @@
                 <button
                     type="button"
                     class="px-6 py-3 border border-steel-700 hover:border-teal-500/60 text-steel-200 hover:text-teal-300 font-medium rounded-full transition-all"
+                    @click="copyCompare"
+                >
+                    {{ compareLabel }}
+                </button>
+                <button
+                    type="button"
+                    class="px-6 py-3 border border-steel-700 hover:border-teal-500/60 text-steel-200 hover:text-teal-300 font-medium rounded-full transition-all"
                     @click="share"
                 >
                     {{ shareLabel }}
@@ -187,8 +217,11 @@ import {useHead} from '@unhead/vue';
 import {TIERS, PEER_NOTE} from 'data/tiers';
 import {SOURCES, getStat} from 'data/stats';
 import {MAX_SCORE} from 'data/questions';
+import {CAPITAL_TIPS} from 'data/personas';
+import {encodeAnswers} from 'libs/share';
 import {useQuizStore} from 'stores/quiz/quiz';
 import ShareButton from 'components/result/ShareButton.vue';
+import CapitalRadar from 'components/result/CapitalRadar.vue';
 
 const hexAlpha = (hex, alpha) => {
     const h = hex.replace('#', '');
@@ -199,19 +232,56 @@ const hexAlpha = (hex, alpha) => {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+const prMap = (dims) => {
+    const map = {};
+
+    dims.forEach((d) => {
+        map[d.key] = d.pr;
+    });
+
+    return map;
+};
+
 export default {
     name: 'ResultIndex',
-    components: {ShareButton},
+    components: {ShareButton, CapitalRadar},
     setup() {
         const store = useQuizStore();
         const router = useRouter();
         const shareLabel = ref('分享 / 複製連結');
+        const compareLabel = ref('複製比較連結');
 
         useHead({title: () => (store.complete ? `${store.tier.name}（${store.total} 分）— 台灣社會階層測驗` : '你的階層定位')});
 
         const retake = () => {
             store.reset();
             router.push({name: 'QUIZ_INDEX'});
+        };
+
+        const copyCompare = async () => {
+            if (typeof window === 'undefined') return;
+
+            const url = `${window.location.origin}/compare?r=${encodeAnswers(store.answers)}`;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({title: '來比比看我們的資本組成', text: '我在「台灣社會階層測驗」的結果，來跟我比：', url});
+                    return;
+                } catch (e) {
+                    // 取消 → 落到複製
+                }
+            }
+            if (navigator.clipboard) {
+                try {
+                    await navigator.clipboard.writeText(url);
+                    compareLabel.value = '已複製，傳給朋友比 ✓';
+                } catch (e) {
+                    compareLabel.value = '複製失敗';
+                }
+                setTimeout(() => {
+                    compareLabel.value = '複製比較連結';
+                }, 2200);
+            }
         };
 
         const share = async () => {
@@ -238,6 +308,10 @@ export default {
             }
         };
 
+        const persona = store.persona;
+        const weakest = store.weakest;
+        const radarSeries = [{values: prMap(store.dimensions), color: store.tier.color, fill: 0.24}];
+
         return {
             store,
             tiers: TIERS,
@@ -246,10 +320,16 @@ export default {
             maxScore: MAX_SCORE,
             tier: store.tier,
             anchorStats: store.tier.anchors.map(getStat).filter(Boolean),
+            persona,
+            weakest,
+            capitalTip: CAPITAL_TIPS[weakest.key],
+            radarSeries,
             hexAlpha,
             retake,
             share,
             shareLabel,
+            copyCompare,
+            compareLabel,
         };
     },
 };

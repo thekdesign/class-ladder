@@ -24,6 +24,12 @@ export const routes = [
                 meta: {title: '你的階層定位'},
             },
             {
+                path: 'compare',
+                name: PageRoute.COMPARE_INDEX.key,
+                component: () => import('components/pages/compare/CompareIndex.vue'),
+                meta: {title: '資本對照'},
+            },
+            {
                 path: 'data',
                 name: PageRoute.DATA_INDEX.key,
                 component: () => import('components/pages/data/DataIndex.vue'),
