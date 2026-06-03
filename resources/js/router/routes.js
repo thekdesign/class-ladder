@@ -30,6 +30,12 @@ export const routes = [
                 meta: {title: '資本對照'},
             },
             {
+                path: 'personas',
+                name: PageRoute.PERSONAS_INDEX.key,
+                component: () => import('components/pages/personas/PersonasIndex.vue'),
+                meta: {title: '六種資本組成'},
+            },
+            {
                 path: 'data',
                 name: PageRoute.DATA_INDEX.key,
                 component: () => import('components/pages/data/DataIndex.vue'),

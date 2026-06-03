@@ -14,6 +14,7 @@ export default defineConfig({
         extensions: ['.js', '.json', '.css', '.scss', '.vue'],
         alias: {
             components: r('resources/js/components'),
+            composables: r('resources/js/composables'),
             data: r('resources/js/data'),
             enums: r('resources/js/enums'),
             formatters: r('resources/js/formatters'),

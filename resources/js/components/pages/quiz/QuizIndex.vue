@@ -79,11 +79,13 @@
                 下一題 →
             </button>
         </div>
+
+        <p class="hidden sm:block text-center text-xs text-steel-600 mt-5">💡 也可以用鍵盤 1–5 作答、← → 切換題目</p>
     </div>
 </template>
 
 <script>
-import {computed} from 'vue';
+import {computed, onMounted, onBeforeUnmount} from 'vue';
 import {useRouter} from 'vue-router';
 import {useHead} from '@unhead/vue';
 import {QUESTIONS, DIMENSIONS, TOTAL_QUESTIONS} from 'data/questions';
@@ -118,6 +120,23 @@ export default {
                 setTimeout(next, 220);
             }
         };
+
+        // 桌機鍵盤作答：1~5 選項、左右鍵切題
+        const onKey = (e) => {
+            if (e.key >= '1' && e.key <= '5') {
+                const opt = question.value.options[Number(e.key) - 1];
+
+                if (opt) select(opt.score);
+            } else if (e.key === 'ArrowRight') {
+                if (isLast.value && store.complete) goResult();
+                else if (!isLast.value && typeof store.answers[index.value] === 'number') next();
+            } else if (e.key === 'ArrowLeft' && index.value > 0) {
+                prev();
+            }
+        };
+
+        onMounted(() => window.addEventListener('keydown', onKey));
+        onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
 
         return {
             store,

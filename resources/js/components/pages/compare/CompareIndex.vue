@@ -31,7 +31,7 @@
                     </span>
                     <span class="flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full" style="background:#A78BFA"></span>
-                        <span class="text-steel-300">對方</span>
+                        <span class="text-steel-300">{{ theirLabel }}</span>
                     </span>
                 </div>
             </section>
@@ -119,6 +119,7 @@ import {useHead} from '@unhead/vue';
 import {decodeAnswers} from 'libs/share';
 import {summarize} from 'libs/score';
 import {DIMENSIONS} from 'data/questions';
+import {getArchetype} from 'data/archetypes';
 import {useQuizStore} from 'stores/quiz/quiz';
 import CapitalRadar from 'components/result/CapitalRadar.vue';
 
@@ -147,8 +148,10 @@ export default {
 
         useHead({title: '資本對照 — 台灣社會階層測驗'});
 
-        const theirAnswers = computed(() => decodeAnswers(route.query.r));
+        const archetype = computed(() => (route.query.vs ? getArchetype(route.query.vs) : null));
+        const theirAnswers = computed(() => (archetype.value ? archetype.value.answers : decodeAnswers(route.query.r)));
         const their = computed(() => (theirAnswers.value ? summarize(theirAnswers.value) : null));
+        const theirLabel = computed(() => (archetype.value ? `${archetype.value.emoji} ${archetype.value.name}` : '對方'));
         const mine = computed(() => (store.complete ? summarize(store.answers) : null));
 
         const radarSeries = computed(() => {
@@ -162,7 +165,7 @@ export default {
 
         const columns = computed(() => [
             {who: '你', color: '#24C2CE', summary: mine.value},
-            {who: '對方', color: '#A78BFA', summary: their.value},
+            {who: theirLabel.value, color: '#A78BFA', summary: their.value},
         ]);
 
         const capitalRows = computed(() => Object.values(DIMENSIONS).map((dim) => ({
@@ -183,7 +186,7 @@ export default {
             return `對方的特權 PR 高出你 ${-diff}。先別氣餒——看看是哪一種資本被拉開，那就是你的施力點。`;
         });
 
-        return {their, mine, radarSeries, columns, capitalRows, verdict, hexAlpha};
+        return {their, mine, theirLabel, radarSeries, columns, capitalRows, verdict, hexAlpha};
     },
 };
 </script>

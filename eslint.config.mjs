@@ -11,6 +11,7 @@ const r = (p) => path.resolve(__dirname, p);
 
 const aliases = {
     components: r('resources/js/components'),
+    composables: r('resources/js/composables'),
     data: r('resources/js/data'),
     enums: r('resources/js/enums'),
     formatters: r('resources/js/formatters'),

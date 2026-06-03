@@ -24,7 +24,7 @@
             stroke-width="1"
         />
         <!-- 各 series 多邊形 -->
-        <g v-for="(s, i) in seriesPolys" :key="`s${i}`">
+        <g v-for="(s, i) in seriesPolys" :key="`s${i}`" class="series-g">
             <polygon :points="s.points"
                      :fill="s.color"
                      :fill-opacity="s.fill"
@@ -119,5 +119,24 @@ export default {
     font-size: 11px;
     fill: theme('colors.steel.400');
     letter-spacing: 0.05em;
+}
+
+.series-g {
+    animation: radar-fade 600ms ease-out both;
+}
+
+@keyframes radar-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .series-g {
+        animation: none;
+    }
 }
 </style>

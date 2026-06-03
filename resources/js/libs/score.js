@@ -7,6 +7,7 @@ import {QUESTIONS, MIN_SCORE, MAX_SCORE} from 'data/questions';
 import {DIMENSIONS} from 'data/questions';
 import {getTierByScore} from 'data/tiers';
 import {classifyPersona, weakestCapital} from 'data/personas';
+import {INHERITED_QUESTIONS, EARNED_QUESTIONS, inheritanceVerdict} from 'data/inheritance';
 
 export const answeredCount = (answers = []) => answers.filter((s) => typeof s === 'number').length;
 
@@ -52,6 +53,22 @@ export const dimensionScores = (answers = []) => {
     });
 };
 
+/** 繼承 vs 自掙拆解：回傳兩邊分數、繼承占比、與一句評語 */
+export const inheritanceSplit = (answers = []) => {
+    const byId = {};
+
+    QUESTIONS.forEach((q, i) => {
+        byId[q.id] = typeof answers[i] === 'number' ? answers[i] : 0;
+    });
+
+    const inherited = INHERITED_QUESTIONS.reduce((sum, id) => sum + (byId[id] || 0), 0);
+    const earned = EARNED_QUESTIONS.reduce((sum, id) => sum + (byId[id] || 0), 0);
+    const total = inherited + earned;
+    const inheritedPct = total ? Math.round((inherited / total) * 100) : 50;
+
+    return {inherited, earned, inheritedPct, earnedPct: 100 - inheritedPct, verdict: inheritanceVerdict(inheritedPct)};
+};
+
 /**
  * 把一份 answers 整理成完整結果摘要（給結果頁、分享卡、比較頁共用）。
  * 純函式：傳入任意 answers 都能算，不依賴 store。
@@ -69,5 +86,6 @@ export const summarize = (answers = []) => {
         dimensions,
         persona: classifyPersona(dimensions),
         weakest: weakestCapital(dimensions),
+        inheritance: inheritanceSplit(answers),
     };
 };

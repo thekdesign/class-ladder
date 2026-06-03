@@ -35,7 +35,7 @@
                         <div class="text-right">
                             <div class="font-mono text-[0.62rem] tracking-wider text-steel-500 mb-0.5 uppercase">特權 PR</div>
                             <div class="font-display font-bold leading-none font-tabular" :style="{color: tier.color}">
-                                <span class="text-6xl">{{ store.percent }}</span>
+                                <span class="text-6xl">{{ displayPercent }}</span>
                             </div>
                         </div>
                         <div class="text-right">
@@ -75,7 +75,10 @@
 
             <!-- 資本組成診斷（persona）+ 雷達 -->
             <section class="mt-8">
-                <h2 class="font-display text-lg font-bold text-steel-100 mb-1">你的資本組成</h2>
+                <div class="flex items-baseline justify-between mb-1">
+                    <h2 class="font-display text-lg font-bold text-steel-100">你的資本組成</h2>
+                    <RouterLink :to="{name: 'PERSONAS_INDEX'}" class="text-sm text-teal-400 hover:text-teal-300">看 6 種類型 →</RouterLink>
+                </div>
                 <p class="text-sm text-steel-500 mb-4">看「形狀」不只看總分 —— 三種資本的高低配比，決定你是哪一種人。</p>
                 <div class="rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-6 grid sm:grid-cols-[200px_1fr] gap-5 items-center">
                     <div class="max-w-[220px] mx-auto w-full">
@@ -145,6 +148,24 @@
                 </div>
             </section>
 
+            <!-- 繼承 vs 自掙 -->
+            <section class="mt-8">
+                <h2 class="font-display text-lg font-bold text-steel-100 mb-1">出廠配備 vs 自己掙的</h2>
+                <p class="text-sm text-steel-500 mb-4">Bourdieu 的關鍵問題：你的特權，有多少是繼承來的？</p>
+                <div class="rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-6">
+                    <div class="flex h-3 rounded-full overflow-hidden mb-2">
+                        <div :style="{width: `${inh.inheritedPct}%`, background: '#A78BFA'}"></div>
+                        <div :style="{width: `${inh.earnedPct}%`, background: '#24C2CE'}"></div>
+                    </div>
+                    <div class="flex justify-between font-mono text-xs mb-4">
+                        <span style="color:#A78BFA">繼承 {{ inh.inheritedPct }}%</span>
+                        <span style="color:#24C2CE">自掙 {{ inh.earnedPct }}%</span>
+                    </div>
+                    <div class="font-bold text-steel-100 mb-1">{{ inh.verdict.label }}</div>
+                    <p class="text-sm text-steel-400 leading-relaxed">{{ inh.verdict.desc }}</p>
+                </div>
+            </section>
+
             <!-- 對照真實數據 -->
             <section class="mt-8">
                 <div class="flex items-baseline justify-between mb-4">
@@ -179,6 +200,26 @@
             <section class="mt-8 rounded-xl2 border border-teal-500/20 bg-teal-500/5 p-6">
                 <div class="text-xs font-medium text-teal-300 mb-2">🤫 同儕悄悄話</div>
                 <p class="text-sm text-steel-300 leading-relaxed">{{ peerNote }}</p>
+            </section>
+
+            <!-- 跟原型比比看 -->
+            <section class="mt-8">
+                <h2 class="font-display text-lg font-bold text-steel-100 mb-1">跟原型比比看</h2>
+                <p class="text-sm text-steel-500 mb-4">沒有朋友的連結也能比 —— 挑一個原型，看看你跟他差在哪。</p>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <RouterLink
+                        v-for="a in archetypes"
+                        :key="a.id"
+                        :to="{name: 'COMPARE_INDEX', query: {vs: a.id}}"
+                        class="rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-4 flex items-center gap-3 hover:border-teal-500/40 transition-colors"
+                    >
+                        <span class="text-2xl">{{ a.emoji }}</span>
+                        <span class="min-w-0">
+                            <span class="block font-bold text-steel-100 text-sm">{{ a.name }}</span>
+                            <span class="block text-xs text-steel-500 truncate">{{ a.blurb }}</span>
+                        </span>
+                    </RouterLink>
+                </div>
             </section>
 
             <!-- 行動 -->
@@ -218,7 +259,9 @@ import {TIERS, PEER_NOTE} from 'data/tiers';
 import {SOURCES, getStat} from 'data/stats';
 import {MAX_SCORE} from 'data/questions';
 import {CAPITAL_TIPS} from 'data/personas';
+import {ARCHETYPES} from 'data/archetypes';
 import {encodeAnswers} from 'libs/share';
+import {useCountUp} from 'composables/useCountUp';
 import {useQuizStore} from 'stores/quiz/quiz';
 import ShareButton from 'components/result/ShareButton.vue';
 import CapitalRadar from 'components/result/CapitalRadar.vue';
@@ -311,6 +354,7 @@ export default {
         const persona = store.persona;
         const weakest = store.weakest;
         const radarSeries = [{values: prMap(store.dimensions), color: store.tier.color, fill: 0.24}];
+        const displayPercent = useCountUp(store.percent);
 
         return {
             store,
@@ -324,6 +368,9 @@ export default {
             weakest,
             capitalTip: CAPITAL_TIPS[weakest.key],
             radarSeries,
+            inh: store.inheritance,
+            archetypes: ARCHETYPES,
+            displayPercent,
             hexAlpha,
             retake,
             share,

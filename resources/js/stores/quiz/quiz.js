@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import {QUESTIONS} from 'data/questions';
-import {totalScore, answeredCount, isComplete, tierOf, dimensionScores, scorePercent} from 'libs/score';
+import {totalScore, answeredCount, isComplete, tierOf, dimensionScores, scorePercent, inheritanceSplit} from 'libs/score';
 import {classifyPersona, weakestCapital} from 'data/personas';
 
 const STORAGE_KEY = 'class-ladder:answers:v2';
@@ -42,6 +42,7 @@ export const useQuizStore = defineStore('quiz', {
         dimensions: (state) => dimensionScores(state.answers),
         persona: (state) => classifyPersona(dimensionScores(state.answers)),
         weakest: (state) => weakestCapital(dimensionScores(state.answers)),
+        inheritance: (state) => inheritanceSplit(state.answers),
         progress: (state) => Math.round((answeredCount(state.answers) / QUESTIONS.length) * 100),
     },
 
