@@ -67,6 +67,27 @@
                 </div>
             </section>
 
+            <!-- 翻轉建議 -->
+            <section class="mt-8">
+                <h2 class="font-display text-lg font-bold text-steel-100 mb-4">{{ tier.adviceTitle }}</h2>
+                <div class="space-y-3">
+                    <div
+                        v-for="(adv, i) in tier.advices"
+                        :key="i"
+                        class="rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-5 flex gap-4 hover:border-teal-500/40 transition-colors"
+                    >
+                        <span
+                            class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-mono text-sm font-bold"
+                            :style="{background: hexAlpha(tier.color, 0.16), color: tier.color}"
+                        >{{ i + 1 }}</span>
+                        <div>
+                            <div class="font-bold text-steel-100 leading-snug mb-1">{{ adv.title }}</div>
+                            <p class="text-sm text-steel-400 leading-relaxed">{{ adv.desc }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- 構面拆解 -->
             <section class="mt-8">
                 <h2 class="font-display text-lg font-bold text-steel-100 mb-4">你的四個構面</h2>

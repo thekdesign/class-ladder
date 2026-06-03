@@ -97,6 +97,10 @@ export default {
 
         useHead({title: '作答中 — 台灣社會階層測驗'});
 
+        // 已完成過的測驗，重新進來時清空上次選項（重測 = 從零開始、不預填、不殘留）。
+        // 作答到一半（未完成）則保留進度，重整或返回不會弄丟答案。
+        if (store.complete) store.reset();
+
         const index = computed(() => store.currentIndex);
         const question = computed(() => QUESTIONS[index.value]);
         const dimension = computed(() => DIMENSIONS[question.value.dimension]);
