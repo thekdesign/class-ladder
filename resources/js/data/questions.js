@@ -47,10 +47,10 @@ export const QUESTIONS = [
         title: '你的「淨資產」結構（存款＋股票現值＋房產現值扣除貸款）大約是？',
         options: [
             {key: 'A', score: 1, label: '處於負債，或淨資產在 NT$ 50 萬以下'},
-            {key: 'B', score: 2, label: 'NT$ 50 ~ 300 萬之間'},
-            {key: 'C', score: 3, label: 'NT$ 300 ~ 1,500 萬之間', note: '全台家庭淨資產中位數為 894 萬'},
-            {key: 'D', score: 4, label: 'NT$ 1,500 ~ 5,000 萬之間'},
-            {key: 'E', score: 5, label: 'NT$ 5,000 萬以上（甚至破億）', note: '最富 20% 家庭平均淨值 5,133 萬'},
+            {key: 'B', score: 2, label: 'NT$ 50 ~ 300 萬', note: '最低 20% 家庭平均淨值約 77 萬'},
+            {key: 'C', score: 3, label: 'NT$ 300 ~ 900 萬', note: '全台家庭淨資產中位數為 894 萬'},
+            {key: 'D', score: 4, label: 'NT$ 900 ~ 3,000 萬', note: '平均每戶淨值約 1,638 萬（被高資產家庭拉高）'},
+            {key: 'E', score: 5, label: 'NT$ 3,000 萬以上', note: '最富 20% 家庭平均淨值 5,133 萬'},
         ],
     },
     // ───────── 文化資本 ─────────
