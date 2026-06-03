@@ -38,8 +38,8 @@ export default {
         const labels = reactive({square: '下載結果圖', story: '限動直式版'});
 
         const FORMATS = {
-            square: {scale: 2, suffix: '', share: false},
-            story: {scale: 1.5, suffix: '_限動版', share: true},
+            square: {scale: 2, suffix: ''},
+            story: {scale: 1.5, suffix: '_限動版'},
         };
 
         const resetLabels = () => {
@@ -81,20 +81,22 @@ export default {
                 const file = blob ? new File([blob], filename, {type: 'image/png'}) : null;
                 const text = `我在「台灣社會階層測驗」測出 ${store.total} 分（特權 PR ${store.percent}）：${store.tier.name}・${store.persona.name}`;
 
-                if (cfg.share && file && navigator.canShare && navigator.canShare({files: [file]})) {
+                // iOS Safari 不支援 <a download>，存圖只能走分享面板 →「儲存影像」。
+                // 所以：有檔案分享能力（手機）一律走 share；桌機才用 <a download>。
+                if (file && navigator.canShare && navigator.canShare({files: [file]})) {
                     try {
                         await navigator.share({files: [file], title: '台灣社會階層測驗', text});
-                        labels[format] = '已分享 ✓';
+                        labels[format] = '完成 ✓';
                     } catch (e) {
                         if (e && e.name === 'AbortError') {
                             resetLabels();
                         } else {
-                            triggerDownload(canvas, filename);
+                            triggerDownload(blob, canvas, filename);
                             labels[format] = '已下載 ✓';
                         }
                     }
                 } else {
-                    triggerDownload(canvas, filename);
+                    triggerDownload(blob, canvas, filename);
                     labels[format] = '已下載 ✓';
                 }
             } catch (e) {
@@ -106,11 +108,17 @@ export default {
             }
         };
 
-        const triggerDownload = (canvas, filename) => {
+        const triggerDownload = (blob, canvas, filename) => {
+            // 大圖用 Blob object URL 比 dataURL 穩（dataURL 在某些瀏覽器有長度上限）
+            const url = blob ? URL.createObjectURL(blob) : canvas.toDataURL('image/png');
             const link = document.createElement('a');
+
             link.download = filename;
-            link.href = canvas.toDataURL('image/png');
+            link.href = url;
+            document.body.appendChild(link);
             link.click();
+            link.remove();
+            if (blob) setTimeout(() => URL.revokeObjectURL(url), 1000);
         };
 
         return {squareRef, storyRef, busy, labels, run};
