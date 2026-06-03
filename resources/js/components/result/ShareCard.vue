@@ -36,13 +36,14 @@
                 <div class="share-card__zone" :style="{color: tier.color}">{{ tier.zone }}</div>
             </div>
 
-            <!-- 主體：稱號 + 分數 -->
+            <!-- 主體：稱號 + 特權 PR + 總分 -->
             <div class="share-card__body">
                 <div class="share-card__label">我的階層定位</div>
                 <div class="share-card__name" :style="{color: tier.color}">{{ tier.name }}</div>
                 <div class="share-card__score">
-                    <span class="share-card__score-num" :style="{color: tier.color}">{{ total }}</span>
-                    <span class="share-card__score-max">/ 35 分</span>
+                    <span class="share-card__score-num" :style="{color: tier.color}">{{ percent }}</span>
+                    <span class="share-card__score-unit">特權 PR</span>
+                    <span class="share-card__score-max">總分 {{ total }} / {{ maxScore }}</span>
                 </div>
             </div>
 
@@ -58,18 +59,15 @@
                     <div class="share-card__marker" :style="{left: `calc(${percent}% - 13px)`, background: tier.color}"></div>
                 </div>
                 <div class="share-card__scale">
-                    <span>7 生存</span>
-                    <span>20 陣痛</span>
-                    <span>27 翻身</span>
-                    <span>35 頂層</span>
+                    <span v-for="t in tiers" :key="t.id">{{ t.min }} {{ t.short }}</span>
                 </div>
             </div>
 
-            <!-- 四構面 -->
+            <!-- 三種資本（PR） -->
             <div class="share-card__dims">
                 <div v-for="dim in dimensions" :key="dim.key" class="share-card__dim">
                     <div class="share-card__dim-label">{{ dim.label }}</div>
-                    <div class="share-card__dim-value" :style="{color: tier.color}">{{ dim.score }}<span>/{{ dim.max }}</span></div>
+                    <div class="share-card__dim-value" :style="{color: tier.color}">{{ dim.pr }}<span>PR</span></div>
                 </div>
             </div>
 
@@ -85,6 +83,7 @@
 <script>
 import {ref, computed} from 'vue';
 import {TIERS} from 'data/tiers';
+import {MAX_SCORE} from 'data/questions';
 import {useQuizStore} from 'stores/quiz/quiz';
 
 const segDim = (hex) => {
@@ -107,6 +106,7 @@ export default {
         return {
             cardEl,
             tiers: TIERS,
+            maxScore: MAX_SCORE,
             tier: computed(() => store.tier),
             total: computed(() => store.total),
             percent: computed(() => store.percent),
@@ -187,7 +187,7 @@ export default {
 .share-card__score {
     display: flex;
     align-items: baseline;
-    gap: 12px;
+    gap: 14px;
 }
 .share-card__score-num {
     font-size: 100px;
@@ -195,10 +195,18 @@ export default {
     line-height: 1;
     font-variant-numeric: tabular-nums;
 }
-.share-card__score-max {
-    font-size: 34px;
-    font-weight: 700;
+.share-card__score-unit {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1px;
     color: #5A6788;
+}
+.share-card__score-max {
+    font-size: 24px;
+    font-weight: 600;
+    color: #46506B;
+    margin-left: auto;
+    align-self: flex-end;
 }
 
 .share-card__spectrum {
@@ -234,8 +242,8 @@ export default {
 
 .share-card__dims {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
     padding: 26px 0;
     border-top: 1px solid rgba(121, 134, 168, 0.25);
     border-bottom: 1px solid rgba(121, 134, 168, 0.25);
@@ -251,9 +259,10 @@ export default {
     font-variant-numeric: tabular-nums;
 }
 .share-card__dim-value span {
-    font-size: 17px;
+    font-size: 16px;
     color: #5A6788;
     font-weight: 600;
+    margin-left: 4px;
 }
 
 .share-card__footer {

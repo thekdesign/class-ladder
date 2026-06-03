@@ -1,21 +1,25 @@
 /**
- * 測驗題庫：7 題，每題 5 個選項（A~E = 1~5 分），總分 7~35。
+ * 測驗題庫：以 Bourdieu「三種資本」拆解 privilege（特權）。
+ * 3 種資本 × 每種 3 題 = 9 題，每題 5 個選項（A~E = 1~5 分），總分 9~45。
  *
- * 分四個構面（dimension）：資本實力、安全網、認知與環境、時間與主導權。
+ * - 經濟資本 economic：你手上的錢與資產（收入、房產、淨資產）
+ * - 文化資本 cultural：知識、學養、品味、財商
+ * - 社會資本 social：你認識誰、誰能幫你（同儕、人脈、原生靠山）
+ *
  * 部分選項帶 note：對照真實台灣數據，讓選擇當下就有「定位感」。
  */
 
 export const DIMENSIONS = {
-    capital: {key: 'capital', label: '資本實力', sub: '財務與資產結構'},
-    safety: {key: 'safety', label: '安全網', sub: '抗風險與防禦力'},
-    cognition: {key: 'cognition', label: '認知與環境', sub: '社會與文化資本'},
-    autonomy: {key: 'autonomy', label: '時間與主導權', sub: '生活型態'},
+    economic: {key: 'economic', label: '經濟資本', sub: '你手上的錢與資產'},
+    cultural: {key: 'cultural', label: '文化資本', sub: '知識、學養、品味、財商'},
+    social: {key: 'social', label: '社會資本', sub: '你認識誰、誰能幫你'},
 };
 
 export const QUESTIONS = [
+    // ───────── 經濟資本 ─────────
     {
-        id: 'q1',
-        dimension: 'capital',
+        id: 'e1',
+        dimension: 'economic',
         title: '你的個人年薪或主要主動收入落在？',
         options: [
             {key: 'A', score: 1, label: 'NT$ 40 萬以下（接近基本工資）'},
@@ -26,8 +30,8 @@ export const QUESTIONS = [
         ],
     },
     {
-        id: 'q2',
-        dimension: 'capital',
+        id: 'e2',
+        dimension: 'economic',
         title: '關於房地產與居住狀態，你目前是？',
         options: [
             {key: 'A', score: 1, label: '在雙北或主要都會區租屋，且租金佔了收入的三分之一以上'},
@@ -38,8 +42,8 @@ export const QUESTIONS = [
         ],
     },
     {
-        id: 'q3',
-        dimension: 'capital',
+        id: 'e3',
+        dimension: 'economic',
         title: '你的「淨資產」結構（存款＋股票現值＋房產現值扣除貸款）大約是？',
         options: [
             {key: 'A', score: 1, label: '處於負債，或淨資產在 NT$ 50 萬以下'},
@@ -49,33 +53,47 @@ export const QUESTIONS = [
             {key: 'E', score: 5, label: 'NT$ 5,000 萬以上（甚至破億）', note: '最富 20% 家庭平均淨值 5,133 萬'},
         ],
     },
+    // ───────── 文化資本 ─────────
     {
-        id: 'q4',
-        dimension: 'safety',
-        title: '若你或最親的家人突然生大病需長期照顧，或你非自願失業，財務能撐多久不變形？',
+        id: 'c1',
+        dimension: 'cultural',
+        title: '你的教育與成長環境（學歷、家庭的文化與栽培）大致是？',
         options: [
-            {key: 'A', score: 1, label: '連 1~2 個月都很難熬，會立刻陷入斷炊危機'},
-            {key: 'B', score: 2, label: '靠微薄存款可以撐 3~6 個月，但內心會極度焦慮'},
-            {key: 'C', score: 3, label: '依靠緊急預備金與基本醫療險、防癌險，可以安心支撐 1 年不工作'},
-            {key: 'D', score: 4, label: '完善的資產配置（源源不絕的股利）與高額保險，完全不影響生活品質'},
-            {key: 'E', score: 5, label: '家族有龐大母體資源或家族信託，這類風險只是數字變動，不構成生存威脅'},
+            {key: 'A', score: 1, label: '高中職以下，家中幾乎沒有藏書或藝文習慣'},
+            {key: 'B', score: 2, label: '國內一般大學畢業，多半靠自己摸索'},
+            {key: 'C', score: 3, label: '國內頂大或碩士，從小有栽培（才藝、補習、遊學）'},
+            {key: 'D', score: 4, label: '海外名校或雙語環境，家中重視文化與教養'},
+            {key: 'E', score: 5, label: '跨國菁英教育（私校／常春藤），家學淵源、文化資本世代累積'},
         ],
     },
     {
-        id: 'q5',
-        dimension: 'cognition',
-        title: '你平時主要的投資與理財行為是？',
+        id: 'c2',
+        dimension: 'cultural',
+        title: '你的財商與理財知識到什麼程度？',
         options: [
-            {key: 'A', score: 1, label: '沒有餘錢可以投資，屬於標準的月光族或現賺現花'},
-            {key: 'B', score: 2, label: '跟風定期定額或買高股息 ETF，但容易受市場波動影響心情'},
-            {key: 'C', score: 3, label: '有系統地配置大盤市值型 ETF、個股或海外資產，明白複利與長線邏輯'},
-            {key: 'D', score: 4, label: '除股市外，還涉足海內外房地產、一級市場，或能精準利用槓桿擴大資產'},
-            {key: 'E', score: 5, label: '擁有專屬理財顧問、會計師或租稅規劃，投資以「家族資產傳承與避稅」為核心'},
+            {key: 'A', score: 1, label: '沒有餘錢投資，也沒在管錢，標準月光族'},
+            {key: 'B', score: 2, label: '跟風定期定額或買高股息 ETF，但說不太出原理'},
+            {key: 'C', score: 3, label: '懂複利與長線，有系統配置大盤 ETF／個股／海外資產'},
+            {key: 'D', score: 4, label: '看得懂財報與總經、能運用槓桿，涉足房地產或一級市場'},
+            {key: 'E', score: 5, label: '有專屬顧問與會計師，以家族傳承、節稅、資產架構為核心'},
         ],
     },
     {
-        id: 'q6',
-        dimension: 'cognition',
+        id: 'c3',
+        dimension: 'cultural',
+        title: '你的品味、文化消費與語言能力比較接近？',
+        options: [
+            {key: 'A', score: 1, label: '休閒以追劇、手遊、CP 值娛樂為主，外語幾乎用不到'},
+            {key: 'B', score: 2, label: '偶爾旅遊、看展，能用簡單外語'},
+            {key: 'C', score: 3, label: '有固定閱讀／藝文習慣或一門才藝，外語能順暢溝通'},
+            {key: 'D', score: 4, label: '紅酒、藝術、高爾夫或音樂會是日常，雙語流利'},
+            {key: 'E', score: 5, label: '收藏或贊助藝文，多語切換自如，品味本身就是社交貨幣'},
+        ],
+    },
+    // ───────── 社會資本 ─────────
+    {
+        id: 's1',
+        dimension: 'social',
         title: '你身邊最常接觸、討論事情的 5 個核心同儕圈，最常聊的話題是？',
         options: [
             {key: 'A', score: 1, label: '抱怨老闆、物價、優惠券、娛樂八卦或遊戲'},
@@ -86,19 +104,34 @@ export const QUESTIONS = [
         ],
     },
     {
-        id: 'q7',
-        dimension: 'autonomy',
-        title: '關於你的時間分配，你手頭的主導權有多少？',
+        id: 's2',
+        dimension: 'social',
+        title: '遇到難題（找工作、就醫、法律、創業）時，你的人脈能幫你解決到什麼程度？',
         options: [
-            {key: 'A', score: 1, label: '典型「拿時間與體力換錢」，完全受制於排班或主管，請假或生病就會少賺'},
-            {key: 'B', score: 2, label: '朝九晚五責任制，壓力不小，薪水穩定但下班後身心俱疲，很難自我提升'},
-            {key: 'C', score: 3, label: '具備高產值專業（如前後端工程師、核心技術職），有彈性／遠端／拒絕不合理要求的底氣'},
-            {key: 'D', score: 4, label: '核心管理職或成熟自營商，已脫離一線勞動，可自由掌控高比例的日程'},
-            {key: 'E', score: 5, label: '財富自由或資產全面自動化運轉，時間 100% 由自己定義，工作只是興趣的延伸'},
+            {key: 'A', score: 1, label: '基本上只能靠自己 Google、自己硬扛'},
+            {key: 'B', score: 2, label: '朋友能給點建議，但幫不上實質的忙'},
+            {key: 'C', score: 3, label: '有幾個能幫你引薦、內推的人脈'},
+            {key: 'D', score: 4, label: '一通電話就能找到該領域的專業人士幫忙'},
+            {key: 'E', score: 5, label: '能動用跨界高層或直達決策者的資源'},
+        ],
+    },
+    {
+        id: 's3',
+        dimension: 'social',
+        title: '你的原生家庭能給你什麼樣的起跑資源？',
+        options: [
+            {key: 'A', score: 1, label: '我反而需要金援原生家庭'},
+            {key: 'B', score: 2, label: '家裡幫不上忙，但至少不拖累我'},
+            {key: 'C', score: 3, label: '需要時，家裡能支援頭期款或應急金'},
+            {key: 'D', score: 4, label: '家裡有人脈與資源，能幫我引薦、鋪路'},
+            {key: 'E', score: 5, label: '家族本身就是一張政商資源網，起跑點遠超多數人'},
         ],
     },
 ];
 
 export const TOTAL_QUESTIONS = QUESTIONS.length;
-export const MIN_SCORE = TOTAL_QUESTIONS; // 7
-export const MAX_SCORE = TOTAL_QUESTIONS * 5; // 35
+export const MIN_SCORE = TOTAL_QUESTIONS; // 9
+export const MAX_SCORE = TOTAL_QUESTIONS * 5; // 45
+
+/** 每種資本的題數（用於 PR 換算：單一資本分數區間 = QUESTIONS_PER_CAPITAL ~ ×5） */
+export const QUESTIONS_PER_CAPITAL = 3;

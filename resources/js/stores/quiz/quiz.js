@@ -2,7 +2,7 @@ import {defineStore} from 'pinia';
 import {QUESTIONS} from 'data/questions';
 import {totalScore, answeredCount, isComplete, tierOf, dimensionScores, scorePercent} from 'libs/score';
 
-const STORAGE_KEY = 'class-ladder:answers:v1';
+const STORAGE_KEY = 'class-ladder:answers:v2';
 const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
 const emptyAnswers = () => QUESTIONS.map(() => undefined);

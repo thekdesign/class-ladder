@@ -12,9 +12,10 @@
         <section class="mb-10 rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-6">
             <h2 class="font-display text-base font-bold text-steel-100 mb-3">怎麼算分？</h2>
             <ul class="space-y-2 text-sm text-steel-300 leading-relaxed list-disc pl-5">
-                <li>7 題、每題 5 個選項，A~E 分別對應 1~5 分，總分介於 <span class="font-mono text-steel-100">7 ~ 35</span>。</li>
-                <li>分四個構面：資本實力（3 題）、安全網（1 題）、認知與環境（2 題）、時間與主導權（1 題）。</li>
+                <li>9 題、每題 5 個選項，A~E 分別對應 1~5 分，總分介於 <span class="font-mono text-steel-100">9 ~ 45</span>。</li>
+                <li>以社會學家 Bourdieu 的「三種資本」拆解 privilege（特權），每種資本各 3 題：經濟資本（收入／房產／淨資產）、文化資本（學養／財商／品味語言）、社會資本（同儕圈／人脈／原生靠山）。</li>
                 <li>總分落在四個級距之一，級距邊界參考下方真實分位數字校準。</li>
+                <li><span class="text-steel-100">PR 值</span>是把分數換算成 0~100 的「量表相對位置」（總分或單一資本），方便快速對照；它<span class="text-steel-100">不是</span>像學測那樣的全國真實百分位。</li>
                 <li>所有作答只存在你的瀏覽器（localStorage），不上傳、不蒐集、無後端。</li>
             </ul>
         </section>

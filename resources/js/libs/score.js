@@ -21,19 +21,32 @@ export const scorePercent = (score) => {
 
 export const tierOf = (score) => getTierByScore(score);
 
-/** 各構面得分：回傳 [{key,label,sub,score,max}]，給結果頁的雷達／長條用 */
+/** 把分數換算成 0~100 的 PR（量表位置，非全國真實百分位） */
+export const toPr = (score, min, max) => {
+    if (max <= min) return 0;
+
+    return Math.round(((score - min) / (max - min)) * 100);
+};
+
+/**
+ * 各資本得分：回傳 [{key,label,sub,score,min,max,pr}]。
+ * 給結果頁的三資本長條 + 每資本 PR 值用。
+ */
 export const dimensionScores = (answers = []) => {
     const buckets = {};
     QUESTIONS.forEach((q, i) => {
         const s = typeof answers[i] === 'number' ? answers[i] : 0;
-        if (!buckets[q.dimension]) buckets[q.dimension] = {score: 0, max: 0};
+        if (!buckets[q.dimension]) buckets[q.dimension] = {score: 0, count: 0};
         buckets[q.dimension].score += s;
-        buckets[q.dimension].max += 5;
+        buckets[q.dimension].count += 1;
     });
 
-    return Object.values(DIMENSIONS).map((dim) => ({
-        ...dim,
-        score: buckets[dim.key]?.score || 0,
-        max: buckets[dim.key]?.max || 0,
-    }));
+    return Object.values(DIMENSIONS).map((dim) => {
+        const score = buckets[dim.key]?.score || 0;
+        const count = buckets[dim.key]?.count || 0;
+        const min = count; // 每題最低 1 分
+        const max = count * 5;
+
+        return {...dim, score, min, max, pr: toPr(score, min, max)};
+    });
 };

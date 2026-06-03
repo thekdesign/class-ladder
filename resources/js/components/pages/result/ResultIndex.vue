@@ -31,10 +31,19 @@
                         <div class="font-mono text-sm mb-1" :style="{color: tier.color}">{{ tier.zone }}</div>
                         <h1 class="font-display text-3xl sm:text-4xl font-bold text-steel-50 leading-tight">{{ tier.name }}</h1>
                     </div>
-                    <div class="sm:ml-auto text-right">
-                        <div class="font-display font-bold leading-none font-tabular" :style="{color: tier.color}">
-                            <span class="text-6xl">{{ store.total }}</span>
-                            <span class="text-2xl text-steel-500"> / 35</span>
+                    <div class="sm:ml-auto flex items-end gap-6">
+                        <div class="text-right">
+                            <div class="font-mono text-[0.62rem] tracking-wider text-steel-500 mb-0.5 uppercase">特權 PR</div>
+                            <div class="font-display font-bold leading-none font-tabular" :style="{color: tier.color}">
+                                <span class="text-6xl">{{ store.percent }}</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-mono text-[0.62rem] tracking-wider text-steel-500 mb-0.5 uppercase">總分</div>
+                            <div class="font-display font-bold leading-none font-tabular text-steel-300">
+                                <span class="text-3xl">{{ store.total }}</span>
+                                <span class="text-lg text-steel-500">/{{ maxScore }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,10 +63,7 @@
                     ></div>
                 </div>
                 <div class="flex justify-between font-mono text-[0.6rem] text-steel-600 mb-7">
-                    <span>7 生存</span>
-                    <span>20 陣痛</span>
-                    <span>27 翻身</span>
-                    <span>35 頂層</span>
+                    <span v-for="t in tiers" :key="t.id">{{ t.min }} {{ t.short }}</span>
                 </div>
 
                 <p class="text-steel-200 leading-relaxed mb-4">{{ tier.summary }}</p>
@@ -88,19 +94,28 @@
                 </div>
             </section>
 
-            <!-- 構面拆解 -->
+            <!-- 三種資本拆解（Bourdieu）+ 每資本 PR -->
             <section class="mt-8">
-                <h2 class="font-display text-lg font-bold text-steel-100 mb-4">你的四個構面</h2>
-                <div class="rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-6 space-y-4">
+                <div class="flex items-baseline justify-between mb-4">
+                    <h2 class="font-display text-lg font-bold text-steel-100">你的三種資本</h2>
+                    <span class="font-mono text-[0.62rem] text-steel-500">PR = 量表位置，非全國真實百分位</span>
+                </div>
+                <div class="rounded-xl2 border border-steel-800/70 bg-ink-900/50 p-6 space-y-5">
                     <div v-for="dim in store.dimensions" :key="dim.key">
                         <div class="flex items-baseline justify-between mb-1.5">
-                            <span class="text-sm text-steel-200">{{ dim.label }}</span>
-                            <span class="font-mono text-xs text-steel-400">{{ dim.score }} / {{ dim.max }}</span>
+                            <span class="text-sm">
+                                <span class="text-steel-200 font-medium">{{ dim.label }}</span>
+                                <span class="text-steel-500 ml-2 text-xs">{{ dim.sub }}</span>
+                            </span>
+                            <span class="font-mono text-xs">
+                                <span class="text-steel-200">PR {{ dim.pr }}</span>
+                                <span class="text-steel-600 ml-2">{{ dim.score }}/{{ dim.max }}</span>
+                            </span>
                         </div>
                         <div class="h-2 rounded-full bg-steel-800 overflow-hidden">
                             <div
                                 class="h-full rounded-full origin-left animate-bar-grow"
-                                :style="{width: `${(dim.score / dim.max) * 100}%`, background: tier.color}"
+                                :style="{width: `${dim.pr}%`, background: tier.color}"
                             ></div>
                         </div>
                     </div>
@@ -171,6 +186,7 @@ import {useRouter} from 'vue-router';
 import {useHead} from '@unhead/vue';
 import {TIERS, PEER_NOTE} from 'data/tiers';
 import {SOURCES, getStat} from 'data/stats';
+import {MAX_SCORE} from 'data/questions';
 import {useQuizStore} from 'stores/quiz/quiz';
 import ShareButton from 'components/result/ShareButton.vue';
 
@@ -227,6 +243,7 @@ export default {
             tiers: TIERS,
             sources: SOURCES,
             peerNote: PEER_NOTE,
+            maxScore: MAX_SCORE,
             tier: store.tier,
             anchorStats: store.tier.anchors.map(getStat).filter(Boolean),
             hexAlpha,

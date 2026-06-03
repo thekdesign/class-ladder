@@ -11,8 +11,10 @@
                 <span class="text-teal-300">哪一層</span>？
             </h1>
             <p class="text-base sm:text-lg text-steel-300 leading-relaxed mb-9">
-                從收入、資產、安全網、認知環境到時間主導權，<br class="hidden sm:block" />
-                7 道題量出你在台灣社會結構中的實質定位 ——
+                用社會學家 Bourdieu 的
+                <span class="text-steel-100 font-medium">三種資本</span>
+                ——經濟、文化、社會——拆解你的「特權值」，<br class="hidden sm:block" />
+                9 道題量出你在台灣社會結構中的實質定位。
                 <br class="hidden sm:block" />
                 每個級距都對照
                 <span class="text-steel-100 font-medium">主計總處、內政部</span>
@@ -41,7 +43,7 @@
             <div class="rounded-xl2 border border-steel-800/70 bg-ink-900/60 p-6 sm:p-8 shadow-panel">
                 <div class="flex items-baseline justify-between mb-4">
                     <h2 class="font-display text-lg font-bold text-steel-100">四個階層級距</h2>
-                    <span class="font-mono text-xs text-steel-500">總分 7 – 35</span>
+                    <span class="font-mono text-xs text-steel-500">總分 9 – 45</span>
                 </div>
 
                 <div class="flex h-3 rounded-full overflow-hidden mb-5">
@@ -69,10 +71,11 @@
             </div>
         </section>
 
-        <!-- 四大構面 -->
+        <!-- 三種資本 -->
         <section class="mb-14">
-            <h2 class="font-display text-lg font-bold text-steel-100 mb-4">量哪四個構面？</h2>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <h2 class="font-display text-lg font-bold text-steel-100 mb-1">拆解你的三種資本</h2>
+            <p class="text-sm text-steel-500 mb-4">privilege（特權）不只是錢——Bourdieu 把它拆成三種可累積、可繼承的資本。</p>
+            <div class="grid sm:grid-cols-3 gap-3">
                 <div
                     v-for="(dim, i) in dimensions"
                     :key="dim.key"
